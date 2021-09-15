@@ -2,7 +2,7 @@
 
 namespace ProductPromotionEngine
 {
-    public class Class1
+    public class ProductPromotionEngineService
     {
     }
 }
