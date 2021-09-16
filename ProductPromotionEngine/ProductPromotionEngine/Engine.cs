@@ -31,12 +31,27 @@ namespace ProductPromotionEngine
             // loop through the list of products in the Order
             foreach (var orderItem in order.Products)
             {
-                // select if there are any promotions to the product in the order
-                Promotion prom = promotions.Where(p => p.ProductId == orderItem.ProductId).FirstOrDefault();
-                if (prom == null)
+                // check if there are any promotions for the product in the order
+                if (!promotions.Where(p => p.ProductId == orderItem.ProductId).Any())
                 {
                     // if there is no promotions for the product
                     calcPrice += orderItem.OrderQuantity * products.FirstOrDefault(p => p.ProductId == orderItem.ProductId).ProductPrice;
+                }
+                else
+                {
+                    //if there are promotions for the porduct
+                    Promotion prom = promotions.Where(p => p.ProductId == orderItem.ProductId).FirstOrDefault();
+                    // if there is a single entry in promotions for the porduct
+                    if (promotions.Where(p => p.PromotionId == prom.PromotionId).Count() == 1)
+                    {
+                        // apply promotion price for quantities in promotion, for the rest of the product, apply product price
+                        calcPrice += ((orderItem.OrderQuantity / prom.PromotionQty) * prom.PromotionPrice) + ((orderItem.OrderQuantity % prom.PromotionQty) * products.FirstOrDefault(p => p.ProductId == orderItem.ProductId).ProductPrice)
+                    }
+                    else
+                    {
+
+                    }
+
                 }
             }
             return calcPrice;
