@@ -59,18 +59,22 @@ namespace ProductPromotionEngine
                             .ToList()
                             .Contains(p.ProductId))
                             .ToList();
-
-                        foreach (var b in orderBundle)
+                        if (orderBundle.Count > 1)
                         {
-                            if (b.OrderQuantity == promotions.Where(p => p.ProductId == b.ProductId).Select(p => p.PromotionQty).FirstOrDefault())
+                            foreach (var b in orderBundle)
                             {
-                                calcPrice += promotions.Where(p => p.ProductId == prom.ProductId).Select(p => p.PromotionPrice).FirstOrDefault() * b.OrderQuantity;
+                                if (b.OrderQuantity == promotions.Where(p => p.ProductId == b.ProductId).Select(p => p.PromotionQty).FirstOrDefault())
+                                {
+                                    calcPrice += promotions.Where(p => p.ProductId == prom.ProductId).Select(p => p.PromotionPrice).FirstOrDefault() * b.OrderQuantity;
+                                }
+                                break;
                             }
-                            break;
                         }
-
+                        else
+                        {
+                            calcPrice += orderItem.OrderQuantity * products.FirstOrDefault(p => p.ProductId == orderItem.ProductId).ProductPrice;
+                        }
                     }
-
                 }
             }
             return calcPrice;
