@@ -62,7 +62,11 @@ namespace ProductPromotionEngine
 
                         foreach (var b in orderBundle)
                         {
-                           calcPrice += promotions.Where(p => p.ProductId == prom.ProductId).Select(p => p.PromotionPrice).FirstOrDefault() * b.OrderQuantity;
+                            if (b.OrderQuantity == promotions.Where(p => p.ProductId == b.ProductId).Select(p => p.PromotionQty).FirstOrDefault())
+                            {
+                                calcPrice += promotions.Where(p => p.ProductId == prom.ProductId).Select(p => p.PromotionPrice).FirstOrDefault() * b.OrderQuantity;
+                            }
+                            break;
                         }
 
                     }
