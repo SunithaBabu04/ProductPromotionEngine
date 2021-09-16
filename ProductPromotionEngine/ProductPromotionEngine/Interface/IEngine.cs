@@ -1,10 +1,11 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
-using System.Text;
+using ProductPromotionEngine.Model;
 
 namespace ProductPromotionEngine.Interface
 {
-    public class IEngine
+    public interface IEngine
     {
+        decimal CalculateTotalPrice(Order order, List<Promotion> promotions, List<Product> products);
     }
 }
