@@ -51,6 +51,19 @@ namespace ProductPromotionEngine
                     }
                     else
                     {
+                        // if there is a multiplce entry in promotions for the porduct, like bundle , C + D
+                        List<Cart> orderBundle = order.Products
+                            .Where(p => promotions
+                            .Where(p => p.PromotionId == prom.PromotionId)
+                            .Select(p => p.ProductId)
+                            .ToList()
+                            .Contains(p.ProductId))
+                            .ToList();
+
+                        foreach (var b in orderBundle)
+                        {
+                           calcPrice += promotions.Where(p => p.ProductId == prom.ProductId).Select(p => p.PromotionPrice).FirstOrDefault() * b.OrderQuantity;
+                        }
 
                     }
 
