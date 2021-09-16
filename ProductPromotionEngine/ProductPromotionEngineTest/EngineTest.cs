@@ -16,7 +16,7 @@ namespace ProductPromotionEngineTest
     using Xunit;
     using ProductPromotionEngine;
 
-    public class EngineTest
+    public class EngineTest: IClassFixture<ServiceMock>
     {
         protected IServiceProvider serviceProvider;
         public EngineTest(ServiceMock service)
@@ -65,7 +65,7 @@ namespace ProductPromotionEngineTest
 
         [Theory]
         [MemberData(nameof(TestSetup), parameters: 5)]
-        public void CalcuateTotalOrderPrice(Order order, List<Promotion> promotions, List<Product> products, decimal result)
+        public void CalculateTotalOrderPrice(Order order, List<Promotion> promotions, List<Product> products, decimal result)
         {
             IEngine unitOfWork = serviceProvider.GetService<IEngine>();
             ProductPromotionEngineService newObj = new ProductPromotionEngineService(unitOfWork);
