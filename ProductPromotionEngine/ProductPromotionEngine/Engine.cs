@@ -7,6 +7,7 @@ namespace ProductPromotionEngine
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Text;
     using ProductPromotionEngine.Interface;
     using ProductPromotionEngine.Model;
@@ -26,6 +27,18 @@ namespace ProductPromotionEngine
         public decimal CalculateTotalPrice(Order order, List<Promotion> promotions, List<Product> products)
         {
             decimal calcPrice = 0M;
+
+            // loop through the list of products in the Order
+            foreach (var orderItem in order.Products)
+            {
+                // select if there are any promotions to the product in the order
+                Promotion prom = promotions.Where(p => p.ProductId == orderItem.ProductId).FirstOrDefault();
+                if (prom == null)
+                {
+                    // if there is no promotions for the product
+                    calcPrice += orderItem.OrderQuantity * products.FirstOrDefault(p => p.ProductId == orderItem.ProductId).ProductPrice;
+                }
+            }
             return calcPrice;
         }
     }
