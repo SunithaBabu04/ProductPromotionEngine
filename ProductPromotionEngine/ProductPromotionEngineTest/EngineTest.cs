@@ -1,14 +1,21 @@
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Xunit;
-using ProductPromotionEngine;
-using ProductPromotionEngine.Interface;
-using ProductPromotionEngine.Model;
+
+//-----------------------------------------------------------------------
+// <copyright file="EngineTest.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 
 namespace ProductPromotionEngineTest
 {
+    using ProductPromotionEngine.Interface;
+    using ProductPromotionEngine.Model;
+    using Microsoft.Extensions.DependencyInjection;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Xunit;
+    using ProductPromotionEngine;
+
     public class EngineTest
     {
         protected IServiceProvider serviceProvider;
